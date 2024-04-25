@@ -1,0 +1,4 @@
+plugin: azure.azcollection.azure_rm
+auth_source: cli
+# include_vm_resource_groups:
+#   - t-clo-902-bdx-2
