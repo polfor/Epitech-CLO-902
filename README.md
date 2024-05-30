@@ -50,3 +50,11 @@ To set up a virtual environment, follow these steps:
 5. You're now ready to start developing within the virtual environment!
 
 Remember to always activate the virtual environment before working on your project to ensure that you're using the correct dependencies.
+
+TO IMPLEMENT :
+
+KUBESPRAY
+TELEGRAF + ELK
+ENV HPROD + PROD
+COMPARTIMENTER
+CREER USERS (1 HPROD, 1 ADMIN)
