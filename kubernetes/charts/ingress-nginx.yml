@@ -1,0 +1,4 @@
+controller:
+  # This should be set, but I can't get an IP address for the load balancer in Azure
+  service:
+    loadBalancerIP: ""

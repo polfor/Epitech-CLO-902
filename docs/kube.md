@@ -40,5 +40,16 @@ We use Helm repos (constellations) for our apps. To set it up, refer to Helm's i
 As a rule of thumb, everytime we deploy using Helm, we make a manifest file such as this :
 
 ```
-helm template ingress-nginx ingress-nginx    --repo https://kubernetes.github.io/ingress-nginx   -namespace ingress-nginx  > ../kubernetes/ingress/controller/nginx/manifests/nginx-ingress.1.10.1.yaml
+helm template ingress-nginx ingress-nginx \
+ --repo https://kubernetes.github.io/ingress-nginx \
+ --version "4.10.1" \
+ --namespace ingress-nginx \
+ -f charts/ingress-nginx.yml \
+ > manifests/ingress-nginx.yml
 ```
+
+### Ingress Nginx
+
+I can't seem to get a Public IP from azure since we don't have the rights, so I have port-forwarded the ingress-nginx-controller service instead to get the ingress to work, so as to keep the project going forward.
+
+`kubectl port-forward svc/ingress-nginx-controller 8080:80 8443:443 -n ingress-nginx`
