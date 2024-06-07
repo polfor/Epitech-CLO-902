@@ -45,11 +45,38 @@ helm template ingress-nginx ingress-nginx \
  --version "4.10.1" \
  --namespace ingress-nginx \
  -f charts/ingress-nginx.yml \
- > manifests/ingress-nginx.yml
+ > manifests/ingress-controller/ingress-nginx.yml
 ```
 
 ### Ingress Nginx
 
+We setup Ingress-Nginx to route our different apps. For all admin tools and utilities, they will be in subdomains, so as to keep the main domain for the deployed production app
+
 I can't seem to get a Public IP from azure since we don't have the rights, so I have port-forwarded the ingress-nginx-controller service instead to get the ingress to work, so as to keep the project going forward.
 
 `kubectl port-forward svc/ingress-nginx-controller 8080:80 8443:443 -n ingress-nginx`
+
+### Gitlab
+
+Wanted to setup Gitlab instead of Kustomize, but I don't think the trouble is worth it.
+
+I seem to be unable to install the gitlab helm chart through the `template` + `kubectl` apply method
+
+I resorted to `helm install gitlab gitlab/gitlab -f charts/gitlab.yml`
+
+Still CrashLooping, moving on...
+
+### Kubernetes-Dashboard
+
+Deployed Kubernetes-Dashboard [through helm](../kubernetes/manifests/kubernetes-dashboard/kubernetes-dashboard.yml), setup its ingress to target dashboard.localhost (will be replaced eventually by a real domain, once Public IP is worked out)
+
+We chose to use [token-based access control](../kubernetes/manifests/kubernetes-dashboard/access-control.yml), leveraging Kubernetes' Service Account api. We created a token for the dashboard-admin user and stored it in a local secret
+
+```
+kubectl -n kubernetes-dashboard create token admin-user > token.txt
+kubectl create secret generic dashboard-admin --from-file token.txt
+```
+
+### Kube-Prometheus
+
+This is a clone of the [kube-prometheus project](https://github.com/prometheus-operator/kube-prometheus). This is loaded as a git submodule, so you need to initialize it with `git submodule init` and `git submodule update`.

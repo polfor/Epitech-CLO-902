@@ -1,0 +1,8 @@
+certmanager-issuer:
+  email: "paul.forsans@epitech.eu"
+global:
+  hosts:
+    domain: "localhost"
+  # ingress:
+  #   configureCertmanager: false
+  #   class: "nginx"
