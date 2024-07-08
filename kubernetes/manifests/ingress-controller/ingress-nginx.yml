@@ -297,9 +297,9 @@ metadata:
   namespace: ingress-nginx
 spec:
   type: LoadBalancer
-  loadBalancerIP: 20.160.1.56
+  loadBalancerIP: 51.144.0.120
   ipFamilyPolicy: SingleStack
-  ipFamilies: 
+  ipFamilies:
     - IPv4
   ports:
     - name: http
@@ -356,12 +356,12 @@ spec:
         - name: controller
           image: registry.k8s.io/ingress-nginx/controller:v1.10.1@sha256:e24f39d3eed6bcc239a56f20098878845f62baa34b9f2be2fd2c38ce9fb0f29e
           imagePullPolicy: IfNotPresent
-          lifecycle: 
+          lifecycle:
             preStop:
               exec:
                 command:
-                - /wait-shutdown
-          args: 
+                  - /wait-shutdown
+          args:
             - /nginx-ingress-controller
             - --publish-service=$(POD_NAMESPACE)/ingress-nginx-controller
             - --election-id=ingress-nginx-leader
@@ -372,17 +372,17 @@ spec:
             - --validating-webhook-certificate=/usr/local/certificates/cert
             - --validating-webhook-key=/usr/local/certificates/key
             - --enable-metrics=false
-          securityContext: 
+          securityContext:
             runAsNonRoot: true
             runAsUser: 101
             allowPrivilegeEscalation: false
-            seccompProfile: 
+            seccompProfile:
               type: RuntimeDefault
             capabilities:
               drop:
-              - ALL
+                - ALL
               add:
-              - NET_BIND_SERVICE
+                - NET_BIND_SERVICE
             readOnlyRootFilesystem: false
           env:
             - name: POD_NAME
@@ -395,7 +395,7 @@ spec:
                   fieldPath: metadata.namespace
             - name: LD_PRELOAD
               value: /usr/local/lib/libmimalloc.so
-          livenessProbe: 
+          livenessProbe:
             failureThreshold: 5
             httpGet:
               path: /healthz
@@ -405,7 +405,7 @@ spec:
             periodSeconds: 10
             successThreshold: 1
             timeoutSeconds: 1
-          readinessProbe: 
+          readinessProbe:
             failureThreshold: 3
             httpGet:
               path: /healthz
@@ -429,11 +429,11 @@ spec:
             - name: webhook-cert
               mountPath: /usr/local/certificates/
               readOnly: true
-          resources: 
+          resources:
             requests:
               cpu: 100m
               memory: 90Mi
-      nodeSelector: 
+      nodeSelector:
         kubernetes.io/os: linux
       serviceAccountName: ingress-nginx
       terminationGracePeriodSeconds: 300
@@ -665,11 +665,11 @@ spec:
               valueFrom:
                 fieldRef:
                   fieldPath: metadata.namespace
-          securityContext: 
+          securityContext:
             allowPrivilegeEscalation: false
             capabilities:
               drop:
-              - ALL
+                - ALL
             readOnlyRootFilesystem: true
             runAsNonRoot: true
             runAsUser: 65532
@@ -677,7 +677,7 @@ spec:
               type: RuntimeDefault
       restartPolicy: OnFailure
       serviceAccountName: ingress-nginx-admission
-      nodeSelector: 
+      nodeSelector:
         kubernetes.io/os: linux
 ---
 # Source: ingress-nginx/templates/admission-webhooks/job-patch/job-patchWebhook.yaml
@@ -726,11 +726,11 @@ spec:
               valueFrom:
                 fieldRef:
                   fieldPath: metadata.namespace
-          securityContext: 
+          securityContext:
             allowPrivilegeEscalation: false
             capabilities:
               drop:
-              - ALL
+                - ALL
             readOnlyRootFilesystem: true
             runAsNonRoot: true
             runAsUser: 65532
@@ -738,5 +738,5 @@ spec:
               type: RuntimeDefault
       restartPolicy: OnFailure
       serviceAccountName: ingress-nginx-admission
-      nodeSelector: 
+      nodeSelector:
         kubernetes.io/os: linux

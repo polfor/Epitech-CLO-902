@@ -113,21 +113,21 @@ resource "azurerm_dev_test_linux_virtual_machine" "vm4" {
   }
 }
 
-resource "azurerm_public_ip" "load-balancer-public-ip" {
-  name                = "LoadBalancerPublicIP"
-  location            = azurerm_resource_group.resource-group.location
-  resource_group_name = azurerm_resource_group.resource-group.name
-  allocation_method   = "Static"
-}
+# resource "azurerm_public_ip" "load-balancer-public-ip" {
+#   name                = "LoadBalancerPublicIP"
+#   location            = azurerm_resource_group.resource-group.location
+#   resource_group_name = azurerm_resource_group.resource-group.name
+#   allocation_method   = "Static"
+# }
 
-resource "azurerm_lb" "load-balancer" {
-  name                = "LoadBalancer"
-  location            = azurerm_resource_group.resource-group.location
-  resource_group_name = azurerm_resource_group.resource-group.name
+# resource "azurerm_lb" "load-balancer" {
+#   name                = "LoadBalancer"
+#   location            = azurerm_resource_group.resource-group.location
+#   resource_group_name = azurerm_resource_group.resource-group.name
 
-  frontend_ip_configuration {
-    name                 = "PublicIPAddress"
-    public_ip_address_id = azurerm_public_ip.load-balancer-public-ip.id
-    subnet_id            = data.azurerm_dev_test_virtual_network.network.allowed_subnets[0].resource_id
-  }
-}
+#   frontend_ip_configuration {
+#     name                 = "PublicIPAddress"
+#     public_ip_address_id = azurerm_public_ip.load-balancer-public-ip.id
+#     subnet_id            = data.azurerm_dev_test_virtual_network.network.allowed_subnets[0].resource_id
+#   }
+# }

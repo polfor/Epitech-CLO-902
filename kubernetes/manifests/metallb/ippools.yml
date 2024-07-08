@@ -1,0 +1,10 @@
+apiVersion: metallb.io/v1beta1
+kind: IPAddressPool
+metadata:
+  name: july-05-pool
+  namespace: metallb
+spec:
+  addresses:
+    - 51.144.0.120/32
+    - 52.136.241.159/32
+    - 52.136.233.141/32

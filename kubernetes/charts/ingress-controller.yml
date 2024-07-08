@@ -1,6 +1,4 @@
 controller:
   # This should be set, but I can't get an IP address for the load balancer in Azure
   service:
-    loadBalancerIP: ""
-tcp:
-  22: "gitlab/gitlab-gitlab-shell:22"
+    loadBalancerIP: "20.73.241.157"
