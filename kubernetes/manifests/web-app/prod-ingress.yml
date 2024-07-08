@@ -1,0 +1,18 @@
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: guu-band-prod-ingress
+  namespace: prod
+spec:
+  ingressClassName: nginx
+  rules:
+    - host: prod.localhost
+      http:
+        paths:
+          - path: /
+            pathType: Prefix
+            backend:
+              service:
+                name: guu-band
+                port:
+                  number: 80

@@ -1,0 +1,12 @@
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  name: guu-band-prod
+spec:
+  project: default
+  source:
+    repoURL: https://github.com/polfor/guu.band_config.git
+    path: overlays/prod
+  destination:
+    server: "https://kubernetes.default.svc"
+    namespace: prod
