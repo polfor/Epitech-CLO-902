@@ -1,0 +1,18 @@
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: chaos-mesh-ingress
+  namespace: chaos-mesh
+spec:
+  ingressClassName: nginx
+  rules:
+    - host: chaos-mesh.localhost
+      http:
+        paths:
+          - path: /
+            pathType: Prefix
+            backend:
+              service:
+                name: chaos-dashboard
+                port:
+                  number: 2333

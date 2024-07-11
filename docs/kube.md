@@ -56,6 +56,12 @@ I can't seem to get a Public IP from azure since we don't have the rights, so I 
 
 `kubectl port-forward svc/ingress-nginx-controller 8080:80 8443:443 -n ingress-nginx`
 
+Update : Even after setting up MetalLB as explained below, it seems the Azure VLAN's firewall doesn't allow HTTP/HTTPS traffic to the IPs
+
+### MetalLB
+
+[This](../kubernetes/manifests/metallb/metallb.yml) is used to remediate the issue of the Public IP by setting up a Bare-Metal Load Balancer that acts as a Public Ip Provider based on a [pool of IPs](../kubernetes/manifests/metallb/ippools.yml) (from nodes in the cluster)
+
 ### Gitlab
 
 Wanted to setup Gitlab instead of Kustomize, but I don't think the trouble is worth it.
@@ -80,3 +86,12 @@ kubectl create secret generic dashboard-admin --from-file token.txt
 ### Kube-Prometheus
 
 This is a clone of the [kube-prometheus project](https://github.com/prometheus-operator/kube-prometheus). This is loaded as a git submodule, so you need to initialize it with `git submodule init` and `git submodule update`.
+This sets up Prometheus agents and a Grafana server to serve as a monitoring space.
+
+### Loki-Stack
+
+Loki-Stack allows for a quick deployment [through helm](../kubernetes/manifests/loki/loki.yml) of a Loki + Promtail setup. We also set up [network policies](../kubernetes/manifests/loki/loki-network-policy.yml) to allow the passage of TCP packets between the Monitoring and Loki Namespaces, so the Grafana server in Kube can use Loki as a Data Source
+
+### ArgoCD
+
+ArgoCD allows us to watch deployment repos and to build from those deployments, rollback, and sync with our CI.
